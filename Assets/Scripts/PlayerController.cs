@@ -4,6 +4,13 @@ using TMPro;
 
 public class PlayerController : MonoBehaviour
 {
+
+    [SerializeField]
+    InputAction jump;
+
+    [SerializeField]
+    float jumpforce = 5f;
+
     public float speed = 0;
     public TextMeshProUGUI countText;
     public GameObject winTextObject;
@@ -19,6 +26,11 @@ public class PlayerController : MonoBehaviour
 
         SetCountText();
         winTextObject.SetActive(false);
+    }
+
+    private void OnEnable()
+    {
+        jump.Enable();
     }
 
     void OnMove(InputValue movementValue)
@@ -44,6 +56,14 @@ public class PlayerController : MonoBehaviour
         Vector3 movement = new Vector3(movementX, 0.0f, movementY);
 
         rb.AddForce(movement * speed);  
+
+        if (jump.IsPressed()) 
+        {
+            if (gameObject.transform.position.y == 0.5f)
+            {
+                rb.AddForce(Vector3.up * jumpforce, ForceMode.Impulse);
+            }
+        }
     }
 
     private void OnTriggerEnter(Collider other)
