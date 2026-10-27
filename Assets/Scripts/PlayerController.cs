@@ -21,11 +21,16 @@ public class PlayerController : MonoBehaviour
     private float movementY;
     void Start()
     {
+        // to lock and hide cursor when you click on the game screen 
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+
         rb = GetComponent<Rigidbody>();
         count = 0;
 
         SetCountText();
         winTextObject.SetActive(false);
+
     }
 
     private void OnEnable()
